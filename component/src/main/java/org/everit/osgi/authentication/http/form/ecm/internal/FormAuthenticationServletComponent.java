@@ -30,28 +30,26 @@ import org.everit.osgi.ecm.annotation.Component;
 import org.everit.osgi.ecm.annotation.ConfigurationPolicy;
 import org.everit.osgi.ecm.annotation.Deactivate;
 import org.everit.osgi.ecm.annotation.ManualService;
+import org.everit.osgi.ecm.annotation.ManualServices;
 import org.everit.osgi.ecm.annotation.ServiceRef;
 import org.everit.osgi.ecm.annotation.attribute.StringAttribute;
 import org.everit.osgi.ecm.annotation.attribute.StringAttributes;
 import org.everit.osgi.ecm.component.ComponentContext;
-import org.everit.osgi.ecm.extender.ECMExtenderConstants;
+import org.everit.osgi.ecm.extender.ExtendComponent;
 import org.everit.resource.resolver.ResourceIdResolver;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 
-import aQute.bnd.annotation.headers.ProvideCapability;
-
 /**
  * ECM component for FormAuthenticationServlet.
  */
+@ExtendComponent
 @Component(
     componentId = FormAuthenticationServletConstants.SERVICE_FACTORYPID_FORM_AUTHENTICATION_SERVLET,
     configurationPolicy = ConfigurationPolicy.FACTORY,
     label = "Everit HTTP Form Authentication Servlet Component",
     description = "The component that implements HTTP form-based authentication mechanism as a "
         + "Servlet.")
-@ProvideCapability(ns = ECMExtenderConstants.CAPABILITY_NS_COMPONENT,
-    value = ECMExtenderConstants.CAPABILITY_ATTR_CLASS + "=${@class}")
 @StringAttributes({
     @StringAttribute(attributeId = Constants.SERVICE_DESCRIPTION,
         defaultValue = FormAuthenticationServletConstants.DEFAULT_SERVICE_DESCRIPTION,
@@ -59,7 +57,7 @@ import aQute.bnd.annotation.headers.ProvideCapability;
         label = "Service Description",
         description = "The description of this component configuration. It is used to easily "
             + "identify the service registered by this component.") })
-@ManualService(Servlet.class)
+@ManualServices(@ManualService(Servlet.class))
 public class FormAuthenticationServletComponent {
 
   private AuthenticationSessionAttributeNames authenticationSessionAttributeNames;
